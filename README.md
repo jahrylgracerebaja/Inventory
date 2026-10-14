@@ -51,3 +51,9 @@ php artisan optimize
 ```
 
 Ensure `storage` and `bootstrap/cache` are writable by the PHP process. Keep the SQLite database on persistent storage if SQLite is used for a single-instance deployment. After each release, clear or rebuild Laravel's cached configuration/routes as appropriate (`php artisan optimize:clear` before changing environment configuration, then `php artisan optimize`). Run the tests before deploying; do not run `migrate:fresh` against production data.
+
+## Render demo deployment
+
+The root `render.yaml` configures a free Docker web service in Singapore. Connect the pushed GitHub repository through Render's Blueprint flow and use the detected `render.yaml` to create the service. Render generates `APP_KEY`; the container builds the frontend, runs migrations at startup, and serves the app on Render's assigned port.
+
+This demo uses SQLite on the service's ephemeral filesystem. Free services can sleep when idle, and inventory data can be lost when the service restarts or redeploys. Use a persistent database and paid service plan for data that must be retained.
