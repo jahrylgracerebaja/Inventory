@@ -38,4 +38,4 @@ ENV APP_ENV=production \
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "export APP_URL=\"${RENDER_EXTERNAL_URL:-${APP_URL:-http://localhost}}\"; php artisan migrate --force && exec php artisan serve --host=0.0.0.0 --port=\"${PORT:-10000}\""]
+CMD ["sh", "-c", "if [ -z \"${APP_KEY:-}\" ]; then echo 'APP_KEY is required' >&2; exit 1; fi; case \"$APP_KEY\" in base64:*) ;; *) export APP_KEY=\"base64:$APP_KEY\" ;; esac; export APP_URL=\"${RENDER_EXTERNAL_URL:-${APP_URL:-http://localhost}}\"; php artisan migrate --force && exec php artisan serve --host=0.0.0.0 --port=\"${PORT:-10000}\""]
