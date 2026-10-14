@@ -9,7 +9,7 @@ COPY vite.config.js ./
 COPY resources ./resources
 RUN npm run build
 
-FROM php:8.3-cli-bookworm
+FROM php:8.5-cli-bookworm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libonig-dev libsqlite3-dev unzip \
